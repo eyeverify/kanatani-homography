@@ -9,7 +9,6 @@
 #define _util_io_h_
 
 #include <iostream>
-#include "matrix.h"
 
 // input and output elements for iostream.
 std::istream& operator>>(std::istream&, matrix&);

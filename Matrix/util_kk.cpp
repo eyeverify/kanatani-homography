@@ -10,13 +10,14 @@
 #include "matrix_base.h"
 #include "util_gen.h"
 #include "util_kk.h"
+#include <opencv2/core/core.hpp>
 
 // inner product
 double operator,(const matrix& m1, const matrix& m2)
 {
   if(m1.rsz() != m2.rsz() || m1.csz() != m2.csz()) {
     std::cerr << ",(matrix,matrix): dimensional error." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   double x = 0.0;
 
@@ -32,7 +33,7 @@ vector operator%(const vector& v1, const vector& v2)
 {
   if(v1.sz() != 3 || v2.sz() != 3) {
     std::cerr << "%(vector,vector): dimensional error." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   vector u(3);
 
@@ -48,7 +49,7 @@ matrix operator%(const vector& v, const matrix& m)
 {
   if(v.sz() != 3 || m.rsz() != 3 || m.csz() != 3) {
     std::cerr << "%(vector,matrix): dimensional error." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   matrix n(3,3);
 
@@ -66,7 +67,7 @@ matrix operator%(const matrix& m, const vector& v)
 {
   if(m.rsz() != 3 || m.csz() != 3 || v.sz() != 3) {
     std::cerr << "%(matrix,vector): dimensional error." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   matrix n(3,3);
 
@@ -84,7 +85,7 @@ matrix operator%(const matrix& m1, const matrix& m2)
 {
   if(m1.rsz() != 3 || m1.csz() != 3 || m2.rsz() != 3 || m2.csz() != 3) {
     std::cerr << "%(matrix,matrix): dimensional error." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   matrix n(3,3);
 
@@ -115,7 +116,7 @@ matrix S(const matrix& m)
 {
   if(m.rsz() != m.csz()) {
     std::cerr << "S(matrix): not square matrix." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   return (m+tp(m))/2.0;
 }
@@ -125,7 +126,7 @@ matrix A(const matrix& m)
 {
   if(m.rsz() != m.csz()) {
     std::cerr << "A(matrix): not square matrix." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   return (m-tp(m))/2.0;
 }
@@ -135,12 +136,12 @@ vector t3(const matrix& m)
 {
   if(m.rsz() != 3 || m.csz() != 3) {
     std::cerr << "t3(matrix): dimensional error." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   if(m[0][0] != 0.0 || m[1][1] != 0.0 || m[2][2] != 0.0 ||
      m[0][1] != -m[1][0] || m[0][2] != -m[2][0] || m[1][2] != -m[2][1]) {
     std::cerr << "t3(matrix): not anti-symmetric matrix." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   vector u(3);
 

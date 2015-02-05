@@ -8,8 +8,6 @@
 #ifndef _util_kk_h_
 #define _util_kk_h_
 
-#include "matrix_base.h"
-
 // inner product
 double operator,(const matrix&, const matrix&);
 

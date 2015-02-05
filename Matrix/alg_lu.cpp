@@ -4,6 +4,9 @@
 #include <stdlib.h>
 #include <math.h>
 #include "alg_matutil.h"  /* 行列操作の小道具集 */
+
+#include <string>
+
 double alg_lu(int n, matrix a, int *ip)
 {
 	int i, j, k, ii, ik;
@@ -67,7 +70,8 @@ double alg_matinv(int n, matrix a, matrix a_inv)
 	double t, det;
 	int *ip;   /* 行交換の情報 */
 	ip = (int *)malloc(sizeof(int) * n);
-	if (ip == NULL) alg_error("記憶領域不足");
+    
+	if (ip == NULL) alg_error("alg_error");
 	det = alg_lu(n, a, ip);
 	if (det != 0)
 		for (k = 0; k < n; k++) {
@@ -92,7 +96,8 @@ double alg_gauss(int n, matrix a, vector b, vector x)
 	double det;  /* 行列式 */
 	int *ip;     /* 行交換の情報 */
 	ip = (int *)malloc(sizeof(int) * n);      /* 記憶領域確保 */
-	if (ip == NULL) alg_error("記憶領域不足");
+
+	if (ip == NULL) alg_error("alg_error");
 	det = alg_lu(n, a, ip);                   /* LU分解 */
 	if (det != 0) alg_solve(n, a, b, ip, x);  /* 連立方程式を解く */
 	free(ip);                                 /* 記憶領域の解放 */
@@ -103,7 +108,7 @@ double alg_det(int n, matrix a)
 	double det;  /* 行列式 */
 	int *ip;     /* 行交換の情報 */
 	ip = (int *)malloc(sizeof(int) * n);       /* 記憶領域確保 */
-	if (ip == NULL) alg_error("記憶領域不足");
+	if (ip == NULL) alg_error("alg_error");
 	det = alg_lu(n, a, ip);                    /* LU分解 */
 	free(ip);                                  /* 記憶領域の解放 */
 	return det;                                /* 行列式 */

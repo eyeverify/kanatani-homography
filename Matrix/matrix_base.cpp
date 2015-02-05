@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "matrix_base.h"
+#include <opencv2/core/core.hpp>
 
 //
 // member functions of class matrix
@@ -23,14 +24,14 @@ matrix::matrix(int rsz, int csz)
 {
   if(rsz < 1 || csz < 1) {
     std::cerr << "matrix::matrix(int,int): invalid dimension." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   _rsz = rsz;
   _csz = csz;
 
   if((_m = new double[_rsz*_csz]) == 0) {
     std::cerr << "matrix::matrix(int,int): memory allocation error." << std::endl;
-    exit(1); }
+    CV_Assert(false);; }
 
   for(int i=0; i<(_rsz*_csz); i++) _m[i] = 0.0;
 }
@@ -40,14 +41,14 @@ matrix::matrix(const matrix& m)
 {
   if(m._m == 0) {
     std::cerr << "matrix::matrix(matrix): copy null matrix." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   _rsz = m._rsz;
   _csz = m._csz;
 
   if((_m = new double[_rsz*_csz]) == 0) {
     std::cerr << "matrix::matrix(matrix): memory allocation error." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   for(int i=0; i<(_rsz*_csz); i++) _m[i] = m._m[i];
 }
@@ -57,13 +58,13 @@ matrix& matrix::operator=(const matrix& m)
 {
   if(_m == 0 || m._m == 0) {
     std::cerr << "matrix::=(matrix): assign null matrix." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
   
   if(this == &m) return *this;
 
   if(_rsz != m._rsz || _csz != m._csz) {
     std::cerr << "matrix::=(matrix): dimension conflict." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   for(int i=0; i<(_rsz*_csz); i++) _m[i] = m._m[i];
 
@@ -81,7 +82,7 @@ void matrix::init(int rsz, int csz)
 {
   if(csz < 1 || rsz < 1) {
     std::cerr << "matrix::init(int,int): invalid dimension." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   if(_m != 0) delete [] _m;
 
@@ -90,7 +91,7 @@ void matrix::init(int rsz, int csz)
 
   if((_m = new double[_rsz*_csz]) == 0) {
     std::cerr << "matrix::init(int,int): memory allocation error." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   for(int i=0; i<(_rsz*_csz); i++) _m[i] = 0.0;
 }
@@ -106,7 +107,7 @@ matrix& matrix::operator+=(const matrix& m)
 {
   if(_rsz != m._rsz || _csz != m._csz) {
     std::cerr << "matrix::+=(matrix): dimension conflict." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   for(int i=0; i<(_rsz*_csz); i++) _m[i] += m._m[i];
 
@@ -117,7 +118,7 @@ matrix& matrix::operator-=(const matrix& m)
 {
   if(_rsz != m._rsz || _csz != m._csz) {
     std::cerr << "matrix::-=(matrix): dimension conflict." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   for(int i=0; i<(_rsz*_csz); i++) _m[i] -= m._m[i];
 
@@ -151,7 +152,7 @@ vector::vector(const matrix& m) : matrix()
 {
   if(m._csz != 1) {
     std::cerr << "vector::vector(matrix): convert invalid matrix." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   matrix::init(m._rsz,1);
 
@@ -163,7 +164,7 @@ void vector::init(int rsz, int csz)
 {
   if(csz != 1) {
     std::cerr << "vector::init(int,int): invalid dimension." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   matrix::init(rsz,1);
 }
@@ -201,7 +202,7 @@ matrix operator+(const matrix& m1, const matrix& m2)
 {
   if(m1._rsz != m2._rsz || m1._csz != m2._csz) {
     std::cerr << "+(matrix,matrix): dimension conflict." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   matrix n(m1._rsz,m1._csz);
 
@@ -214,7 +215,7 @@ vector operator+(const vector& v1, const vector& v2)
 {
   if(v1._rsz != v2._rsz) {
     std::cerr << "+(vector,vector): dimension conflict." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   vector u(v1._rsz);
 
@@ -227,7 +228,7 @@ matrix operator-(const matrix& m1, const matrix& m2)
 {
   if(m1._rsz != m2._rsz || m1._csz != m2._csz) {
     std::cerr << "-(matrix,matrix): dimension conflict." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   matrix n(m1._rsz,m1._csz);
 
@@ -240,7 +241,7 @@ vector operator-(const vector& v1, const vector& v2)
 {
   if(v1._rsz != v2._rsz) {
     std::cerr << "-(vector,vector): dimension conflict." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   vector u(v1._rsz);
 
@@ -271,7 +272,7 @@ matrix operator*(const matrix& m1, const matrix& m2)
 {
   if(m1._csz != m2._rsz) {
     std::cerr << "*(matrix,matrix): dimension conflict." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   matrix n(m1._rsz,m2._csz);
 
@@ -290,7 +291,7 @@ vector operator*(const matrix& m, const vector& v)
 {
   if(m._csz != v._rsz) {
     std::cerr << "*(matrix,vector): dimension conflict." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   vector u(m._rsz);
 

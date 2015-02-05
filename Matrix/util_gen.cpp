@@ -6,16 +6,17 @@
 //---------------------------------------------------------------------//
 
 #include <iostream>
-#include <cmath>
+#include <math.h>
 #include "matrix_base.h"
 #include "util_gen.h"
+#include <opencv2/core/core.hpp>
 
 // convert a 1x1 matrix to scalar.
 double scalar(const matrix& m)
 {
   if(m.rsz() != 1 || m.csz() != 1) {
     std::cerr << "scalar(matrix): invalid dimension." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   return m[0][0];
 }
@@ -25,7 +26,7 @@ void set(matrix& m1, const matrix& m2, int sr, int sc)
 {
   if(sr < 0 || sc < 0 || sr+m2.rsz() > m1.rsz() || sc+m2.csz() > m1.csz()) {
     std::cerr << "set(matrix,matrix,int,int): invalid position." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   for(int j=0; j<m2.rsz(); j++)
     for(int i=0; i<m2.csz(); i++)
@@ -37,7 +38,7 @@ void set(vector& v1, const vector& v2, int sr)
 {
   if(sr < 0 || sr+v2.sz() > v1.sz()) {
     std::cerr << "set(vector,vector,int): invalid position." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   for(int i=0; i<v2.sz(); i++)
     v1[i+sr] = v2[i];
@@ -49,7 +50,7 @@ matrix part(const matrix& m, int sr, int sc, int rsize, int csize)
   if(sr < 0 || sc < 0 || rsize < 0 || csize < 0 ||
      sr+rsize > m.rsz() || sc+csize > m.csz()) {
     std::cerr << "part(matrix,int,int,int,int): invalid part." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   matrix n(rsize,csize);
 
@@ -65,7 +66,7 @@ vector part(const vector& v, int sr, int rsize)
 {
   if(sr < 0 || rsize < 0 || sr+rsize > v.sz()) {
     std::cerr << "part(vector,int,int): invalid part." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   vector u(rsize);
 
@@ -94,7 +95,7 @@ double tr(const matrix& m)
 
   if(m.rsz() != m.csz()) {
     std::cerr << "tr(matrix): not square matrix." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   for(int i=0; i<m.rsz(); i++)  x += m[i][i];
 
@@ -120,7 +121,7 @@ matrix normal(const matrix& m)
 
   if((x=norm(m)) == 0.0) {
     std::cerr << "normal(matrix): zero matrix." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   return m/x;
 }
@@ -130,7 +131,7 @@ double inpro(const vector& v1, const vector& v2)
 {
   if (v1.sz() != v2.sz()) {
     std::cerr << "inpro(vector,vector): dimensional error." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   double x = 0.0;
 
@@ -144,7 +145,7 @@ vector expro(const vector& v1, const vector& v2)
 {
   if (v1.sz() != 3 || v2.sz() != 3) {
     std::cerr << "expro(vector,vector): dimensional error." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   vector u(3);
 
@@ -160,7 +161,7 @@ matrix unit(int d)
 {
   if (d < 1) {
     std::cerr << "unit(int): invalid dimension." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   matrix n(d,d);
 

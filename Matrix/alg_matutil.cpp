@@ -1,6 +1,7 @@
 /***********************************************************
 	alg_matutil.c -- π‘ŒÛ
 ***********************************************************/
+/* π‘ŒÛ¡‡∫Ó§ŒæÆ∆ª∂ÒΩ∏ */
 #include <stdio.h>
 #include <stdlib.h>
 #include "alg_matutil.h"
@@ -17,7 +18,7 @@ vector alg_new_vector(int n)
 {
 	vector v;
 	v = alg_newvec(n);
-	if (v == NULL) alg_error("µ≠≤±ŒŒ∞Ë…‘¬≠.");
+	if (v == NULL) alg_error("alg error");
 	return v;
 }
 void alg_free_vector(vector v)

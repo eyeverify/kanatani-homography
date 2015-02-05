@@ -12,6 +12,8 @@
 #include "util_num.h"
 #include "tensor3333.h"
 
+#include <stdlib.h>
+
 //constructors
 tensor3333::tensor3333()
 {

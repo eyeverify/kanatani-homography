@@ -8,9 +8,6 @@
 #ifndef _util_gen_h_
 #define _util_gen_h_
 
-#include "matrix_base.h"
-#include "matrix.h"
-
 // convert a 1x1 matrix to scalar.
 double scalar(const matrix&);
 // set a matrix on another matrix.

@@ -7,10 +7,9 @@
 
 #include <iostream>
 #include <stdio.h>
-#include <string>
+#include <string.h>
 #include "matrix_base.h"
 #include "util_io.h"
-
 
 // input from stream.
 std::istream& operator>>(std::istream& str, matrix& m)

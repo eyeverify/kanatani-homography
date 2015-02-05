@@ -1,4 +1,4 @@
-#include "Matrix/matrix.h"
+#include "matrix.h"
 
 //---------------------------------------------------------------------//
 //  homoest: Homography estimation from correcpondence between two     //

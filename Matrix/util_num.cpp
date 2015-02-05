@@ -3,6 +3,8 @@
 #include "util_gen.h"
 #include "util_num.h"
 
+#include <opencv2/core/core.hpp>
+
 // inverse matrix by LU decomposition
 matrix inv(const matrix& m)
 {
@@ -13,13 +15,13 @@ matrix inv(const matrix& m)
   // check dimension.
   if(n < 1 || m.csz() != n) {
     std::cerr << "inv: invalid dimension." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   // memory allocation for buffers.
   if((mm = new double*[n]) == 0 || (imidx = new double*[n]) == 0 ||
      (mm[0] = new double[n*n]) == 0 ) {
     std::cerr << "inv: memory allocation error." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   matrix im(n,n);
 
@@ -39,7 +41,7 @@ matrix inv(const matrix& m)
   // check determinant.
   if(det == 0.0) {
     std::cerr << "inv: singular matrix." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   delete [] mm[0], mm, imidx;
   return im;
@@ -55,12 +57,12 @@ double det(const matrix& m)
   // check dimension.
   if(n < 1 || m.csz() != n) {
     std::cerr << "det: invalid dimension." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   // memory allocation for buffers.
   if((mm = new double*[n]) == 0 || (mm[0] = new double[n*n]) == 0 ) {
     std::cerr << "det: memory allocation error." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   // setup of index memories.
   for(i=1; i<n; i++) mm[i] = mm[0] + n*i;
@@ -88,19 +90,19 @@ void eigens(const matrix& m, matrix& u, vector& v)
   // check dimensions.
   if(m.csz() != n || u.rsz() != n || u.csz() != n || v.sz() != n) {
     std::cerr << "eigens: invalid dimension." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   // check being symmetric.
   for(j=1; j<n; j++)
     for(i=0; i<j; i++)
       if(m[j][i] != m[i][j]) {
         std::cerr << "eigens: not symmetric matrix." << std::endl;
-        exit(1); }
+        CV_Assert(false); }
 
   // allocate memory for work vector.
   if((w = new double[n]) == 0) {
     std::cerr << "eigens: memory allocation error." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   // copy matrix m to matrix u.
   u = m;
@@ -108,13 +110,13 @@ void eigens(const matrix& m, matrix& u, vector& v)
   // preparation for matrix u.
   if((uptr = new double*[n]) == 0) {
     std::cerr << "eigens: memory allocation error." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
   for(i=0; i<n; i++) uptr[i] = &(u[0][0]) + n*i;
 
   // calculate eigenvalues and eigenvectors
   if(alg_eigen(n,uptr,&(v[0])) != 0) {
     std::cerr << "eigens: computation error." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   // rearrangement of elements of matrix
   for(i=0; i<n; i++) {
@@ -140,12 +142,12 @@ matrix invs(const matrix& m, double cn)
   // check dimensions.
   if(n < 1 || m.csz() != n) {
     std::cerr << "invs: invalid dimension." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   // check designated condition number
   if(cn < 1.0) {
     std::cerr << "invs: invalid condition number." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   // spectral decomposition
   matrix u(n,n);
@@ -166,7 +168,7 @@ matrix invs(const matrix& m, double cn)
   // check condition number
   if(max >= cn*min) {
     std::cerr << "invs: ill condition." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   // compute inverse
   for(int i=0; i<n; i++) v[i] = 1.0/v[i];
@@ -182,22 +184,22 @@ matrix ginvs(const matrix& m, int rank, double cn)
   // check dimensions.
   if(n < 1 || m.csz() != n) {
     std::cerr << "ginvs: invalid dimension." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   // check designated rank
   if(rank < 1 || rank > n) {
     std::cerr << "ginvs: invalid rank." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   // check designated condition number
   if(cn < 1.0) {
     std::cerr << "ginvs: invalid condition number." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   // memory allocation for work buffers
   matrix u(n,n);
   vector v(n);
-  int idx[100];
+  int    idx[n];
 
   // spectral decomposition
   eigens(m,u,v);
@@ -218,7 +220,7 @@ matrix ginvs(const matrix& m, int rank, double cn)
   if(emin < 0.0) emin *= -1.0;
   if(emax >= cn*emin) {
     std::cerr << "ginvs: ill condition." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   // compute generalized inverse
   for(i=0; i<rank; i++) v[idx[i]] = 1.0/v[idx[i]];
@@ -234,7 +236,7 @@ double dets(const matrix& m)
   // check dimension.
   if(n < 1 || m.csz() != n) {
     std::cerr << "dets: invalid dimension." << std::endl;
-    exit(1); }
+    CV_Assert(false); }
 
   // spectral decomposition
   matrix u(n,n);
