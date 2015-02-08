@@ -4,6 +4,8 @@
 #include "Matrix/matrix.h"
 #include "homoest.h"
 
+#include <stdlib.h>
+
 //  mhomoest: Homography estimation from correcpondence between two    //
 //            sets of image points (main program).                     //
 //  Programmed by Naoya Ohta and Shimizu Yoshiyuki (1999/2/25)         //
