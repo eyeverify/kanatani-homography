@@ -6,9 +6,9 @@
 #include <stdlib.h>
 #include "alg_matutil.h"
 
-void alg_error(char *message)
+void alg_error(const std::string& message)
 {
-	fprintf(stderr, "\n%s\n", message);  exit(EXIT_FAILURE);
+	fprintf(stderr, "\n%s\n", message.c_str());  exit(EXIT_FAILURE);
 }
 vector alg_newvec(int n)
 {

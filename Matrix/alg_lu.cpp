@@ -71,7 +71,7 @@ double alg_matinv(int n, matrix a, matrix a_inv)
 	int *ip;   /* 行交換の情報 */
 	ip = (int *)malloc(sizeof(int) * n);
     
-	if (ip == NULL) alg_error("alg_error");
+    if (ip == NULL) alg_error(std::string("alg_error").c_str());
 	det = alg_lu(n, a, ip);
 	if (det != 0)
 		for (k = 0; k < n; k++) {

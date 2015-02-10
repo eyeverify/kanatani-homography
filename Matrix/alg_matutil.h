@@ -4,6 +4,7 @@
 #ifndef MATUTIL
 #define MATUTIL
 
+#include <string>
 #ifndef EXIT_FAILURE
 #define EXIT_FAILURE 1
 #endif
@@ -19,7 +20,7 @@
 #define SCALAR double
 typedef SCALAR *vector, **matrix;
 
-void   alg_error(char *message);
+void   alg_error(const std::string& message);
 vector alg_newvec(int n);
 vector alg_new_vector(int n);
 void   alg_free_vector(vector v);
