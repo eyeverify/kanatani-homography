@@ -23,4 +23,3 @@ set(KANATANI_HOMOGRAPHY_SRCS
     mhomoest.cpp)
 
 add_library(kanatani-homography STATIC ${KANATANI_HOMOGRAPHY_SRCS})
-install(TARGETS kanatani-homography DESTINATION lib)
