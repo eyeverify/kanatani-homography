@@ -11,6 +11,7 @@
 //  Programmed by Naoya Ohta and Shimizu Yoshiyuki (1999/2/25)         //
 //  Computer Science Department, Gunma University                      //
 
+/*
 int main (int argc, char *argv[])
 {
 	vector  *i1, *i2, *x1, *x2, ic1(2), ic2(2);
@@ -110,3 +111,4 @@ int main (int argc, char *argv[])
 	delete [] i1, i2, x1, x2, Vx1, Vx2;
 	exit(0);
 }
+ */
